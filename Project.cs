@@ -21,13 +21,14 @@ namespace SteveSharp
             return _functionContents[functionName];
         }
 
-        public Project(string name, string description, string id, int pack_format, Function load, Function main, List<Function> functions, List<List<Function>> matrix = null!, List<JsonFile> jsonFiles = null!)
+        public Project(string name, string description, string id, PackFormat packFormat, Function load, Function main, List<Function> functions, List<List<Function>> matrix = null!, List<JsonFile> jsonFiles = null!)
         {
             // Display fresh SteveSharp Display
             Displays.SteveSharpDisplay(name);
             _name = name;
             _description = description;
             _namespace = id;
+            _packFormat = (int)packFormat;
             _load = load;
             _main = main;
             _functions = functions;
@@ -43,7 +44,7 @@ namespace SteveSharp
                 pack = new Pack
                 {
                     description = description,
-                    pack_format = pack_format
+                    pack_format = _packFormat
                 }
             };
             File.WriteAllText("pack.mcmeta", JsonSerializer.Serialize(metadata, new JsonSerializerOptions { WriteIndented = true }));
