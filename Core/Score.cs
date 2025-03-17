@@ -15,13 +15,13 @@ namespace SteveSharp.Core
             this.type = type;
             this.name = name;
         }
-        public void AddObjective() => FunctionBuilder.Add($"scoreboard objectives add {this.id} {this.type} {this.name}");
+        public void AddObjective() => FunctionBuilder.Add(Str.Score.AddObjective(id, type, name));
         public static void AddObjective(string id, string type, string name) => FunctionBuilder.Add(Str.Score.AddObjective(id, type, name));
         public static void AddObjectives(Score[] scores) {
             string commands = "";
             foreach(Score score in scores)
             {
-                commands += $"scoreboard objectives add {score.id} {score.type} {score.name}\n";
+                commands += Str.Score.AddObjective(score.id, score.type, score.name) + "\n";
             }
             FunctionBuilder.Add(commands);
         }

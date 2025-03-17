@@ -17,16 +17,20 @@
         {
             return AddObjective(id, type, name);
         }
-        public static string AddObjective(string id, string type, string name)
+        public static string AddObjective(string id, string type, string name = "")
         {
-            return $"scoreboard objectives add {id} {type} {name}";
+            if(name == "") {
+                return $"scoreboard objectives add {id} {type}";
+            } else {
+                return $"scoreboard objectives add {id} {type} {name}";
+            }
         }
         public static string AddObjectives(Score[] scores)
         {
             string commands = "";
             foreach(Score score in scores)
             {
-                commands += $"scoreboard objectives add {score.id} {score.type} {score.name}\n";
+                commands += AddObjective(score.id, score.type, score.name) + "\n";
             }
             return commands;
         }
