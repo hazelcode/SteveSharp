@@ -3,8 +3,8 @@
     public class Function
     {
         public string Name = "";
-        public List<string> Body { get; set; }
-        public Function(string name, List<string> body)
+        public Func<FunctionContext, string[]> Body { get; set; }
+        public Function(string name, Func<FunctionContext, string[]> body)
         {
             Name = name;
             Body = body;
