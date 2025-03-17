@@ -1,14 +1,21 @@
 namespace SteveSharp;
 
 public static class FunctionBuilder {
-    public static List<string> Commands { get; set; } = new List<string> {};
+    public static List<string> Commands { get; set; } = [];
 
     public static void Add(string command) {
         Commands.Add(command);
     }
 
+    public static void Add(List<string> commands) {
+        Commands = [
+            ..Commands,
+            ..commands
+        ];
+    }
+
     public static string[] Collect() {
-        return Commands.ToArray<string>();
+        return Commands.ToArray();
     }
 
     public static void Clear() {
