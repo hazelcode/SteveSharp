@@ -2,12 +2,16 @@
 {
     public static class XYZ
     {
-        public static string[] Set(string X, string Y, string Z)
-        {
-            return new string[] { X, Y, Z };
+        public static (int x, int y) Vec2(int x, int y) => (x, y);
+        public static (string x, string y) Vec2(string x, string y) => (x, y);
+        public static (int x, int y, int z) Vec3(int x, int y, int z) => (x, y, z);
+        public static (string x, string y, string z) Vec3(string x, string y, string z) => (x, y, z);
+        public static (string x, string y, string z) Rel(int x, int y, int z) => ('~'+x.ToString(), '~'+y.ToString(), '~'+z.ToString());
+        public static string[] Pos(int a, int b, int c) {
+            return ["^"+b, "^"+b, "^"+c];
         }
-        public static string[] Rel(string X, string Y, string Z) {
-            return Set("~"+X, "~"+Y, "~"+Z);
+        public static string[] Pos(string a, string b, string c) {
+            return ['^'+a, '^'+b, '^'+c];
         }
     }
 }

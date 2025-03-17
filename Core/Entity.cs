@@ -1,4 +1,6 @@
-﻿namespace SteveSharp.Core
+﻿using Str = SteveSharp.Core.Strings;
+
+namespace SteveSharp.Core
 {
     public static class Entity
     {
@@ -11,55 +13,12 @@
         /// This method selects an entity with specific matches, recommended if you want to select an entity with specific matches.
         /// </summary>
         /// <returns></returns>
-        public static string Custom(string selector, int? limit = null, string[]? tags = null, string[]? scores = null, string? team = null, string? type = null, string? distance = null, string? area = null, string? level = null, string? gamemode = null, string? horizontalRotation = null, string? verticalRotation = null, string? sort = null) {
-            string match = "";
-            match += selector + "[";
-            if(limit != null) match += "limit=" + limit + ',';
-            if(tags?.Length >= 1){
-                foreach(string tag in tags){
-                    match += "tag=" + tag + ",";
-                }
-            }
-            if(scores?.Length >= 1){
-                match += "scores={";
-                foreach(string score in scores){
-                    match += score + ',';
-                }
-                match += "},";
-            }
-            if(team != null) match += "team=" + team + ',';
-            if(type != null && selector != "@a" || selector != "@r" || selector != "@p")
-                match += "type=" + type + ',';
-            if(distance != null) match += "distance=" + distance + ',';
-            if(area != null) match += area + ',';
-            if(level != null) match += "level=" + level + ',';
-            if(gamemode != null && selector != "@e") match += "gamemode=" + gamemode + ',';
-            if(horizontalRotation != null) match += "y_rotation=" + horizontalRotation + ',';
-            if(verticalRotation != null) match += "x_rotation=" + verticalRotation + ',';
-            if(sort != null) match += "sort=" + sort + ',';
-            if (match.EndsWith(',')) match.Remove(match.Length - 1);
-            match += ']';
-            return match;
-        }
-        public static string Teleport(string selector, string to)
-        {
-            return $"tp {selector} {to}";
-        }
-        public static string Summon(string entity, string[] pos, string nbt = "{}")
-        {
-            return $"summon {entity} {pos[0]} {pos[1]} {pos[2]} {nbt}";
-        }
-        public static string AddTag(string selector, string tag)
-        {
-            return $"tag {selector} add {tag}";
-        }
-        public static string RemoveTag(string selector, string tag)
-        {
-            return $"tag {selector} remove {tag}";
-        }
-        public static string Kill(string selector)
-        {
-            return $"kill {selector}";
-        }
+        public static void Custom(string selector, int? limit = null, string[]? tags = null, string[]? scores = null, string? team = null, string? type = null, string? distance = null, string? area = null, string? level = null, string? gamemode = null, string? horizontalRotation = null, string? verticalRotation = null, string? sort = null)
+        => FunctionBuilder.Add(Str.Entity.Custom(selector, limit, tags, scores, team, type, distance, area, level, gamemode, horizontalRotation, verticalRotation, sort));
+        public static void Teleport(string selector, string to) => FunctionBuilder.Add(Str.Entity.Teleport(selector, to));
+        public static void Summon(string entity, string[] pos, string nbt = "{}") => FunctionBuilder.Add(Str.Entity.Summon(entity, pos, nbt));
+        public static void AddTag(string selector, string tag) => FunctionBuilder.Add(Str.Entity.AddTag(selector, tag));
+        public static void RemoveTag(string selector, string tag) => FunctionBuilder.Add(Str.Entity.RemoveTag(selector, tag));
+        public static void Kill(string selector) => FunctionBuilder.Add(Str.Entity.Kill(selector));
     }
 }

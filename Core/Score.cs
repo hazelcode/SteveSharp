@@ -1,4 +1,6 @@
-﻿namespace SteveSharp.Core
+﻿using Str = SteveSharp.Core.Strings;
+
+namespace SteveSharp.Core
 {
     public class Score
     {
@@ -13,61 +15,47 @@
             this.type = type;
             this.name = name;
         }
-        public string AddObjective()
-        {
-            return $"scoreboard objectives add {this.id} {this.type} {this.name}";
-        }
-        public static string AddObjectives(Score[] scores)
-        {
+        public void AddObjective() => FunctionBuilder.Add($"scoreboard objectives add {this.id} {this.type} {this.name}");
+        public static void AddObjective(string id, string type, string name) => FunctionBuilder.Add(Str.Score.AddObjective(id, type, name));
+        public static void AddObjectives(Score[] scores) {
             string commands = "";
             foreach(Score score in scores)
             {
                 commands += $"scoreboard objectives add {score.id} {score.type} {score.name}\n";
             }
-            return commands;
+            FunctionBuilder.Add(commands);
         }
-        public string Set(int count, string selector = "")
+        public void Set(int count, string selector = "")
         {
-            if(selector == "")
-            {
-                return $"scoreboard players set #{this.id} {this.id} {count}";
-            } else
-            {
-                return $"scoreboard players set {selector} {this.id} {count}";
-            }
+            Set(id, count, selector);
         }
-        public string Add(int count, string selector = "")
+        public static void Set(string id, int count, string selector = "")
         {
-            if (selector == "")
-            {
-                return $"scoreboard players add #{this.id} {this.id} {count}";
-            }
-            else
-            {
-                return $"scoreboard players add {selector} {this.id} {count}";
-            }
+            FunctionBuilder.Add(Str.Score.Set(id, count, selector));
         }
-        public string Remove(string selector, int count)
+        public void Add(int count, string selector = "")
         {
-            if (selector == "")
-            {
-                return $"scoreboard players remove #{this.id} {this.id} {count}";
-            }
-            else
-            {
-                return $"scoreboard players remove {selector} {this.id} {count}";
-            }
+            Add(id, count, selector);
         }
-        public string Reset(string selector = "")
+        public static void Add(string id, int count, string selector = "")
         {
-            if (selector == "")
-            {
-                return $"scoreboard players reset #{this.id} {this.id}";
-            }
-            else
-            {
-                return $"scoreboard players reset {selector} {this.id}";
-            }
+            FunctionBuilder.Add(Str.Score.Add(id, count, selector));
+        }
+        public void Remove(int count, string selector = "")
+        {
+            Remove(id, count, selector);
+        }
+        public static void Remove(string id, int count, string selector = "")
+        {
+            FunctionBuilder.Add(Str.Score.Remove(id, count, selector));
+        }
+        public void Reset(string selector = "")
+        {
+            Reset(id, selector);
+        }
+        public static void Reset(string id, string selector = "")
+        {
+            FunctionBuilder.Add(Str.Score.Reset(id, selector));
         }
         /// <summary>
         /// Only for use in scores={} cases

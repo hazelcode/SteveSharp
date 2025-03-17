@@ -1,23 +1,13 @@
 ﻿using SteveSharp.JsonShapes;
 using System.Text.Json;
+using Str = SteveSharp.Core.Strings;
 
 namespace SteveSharp.Core
 {
     public static class Chat
     {
-        public static string Say(string msg)
-        {
-            return $"say {msg}";
-        }
-        public static string Out(string selector, TextComponent[] text)
-        {
-            string command = "tellraw " + selector + " " + JsonSerializer.Serialize(text);
-            return command;
-        }
-        public static string Out(string selector, TextComponent text)
-        {
-            string command = "tellraw " + selector + " " + JsonSerializer.Serialize(text);
-            return command;
-        }
+        public static void Say(string msg) => FunctionBuilder.Add(Str.Chat.Say(msg));
+        public static void Out(string selector, TextComponent[] text) => FunctionBuilder.Add(Str.Chat.Out(selector, text));
+        public static void Out(string selector, TextComponent text) => FunctionBuilder.Add(Str.Chat.Out(selector, text));
     }
 }
