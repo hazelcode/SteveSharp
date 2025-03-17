@@ -17,6 +17,10 @@ namespace SteveSharp
         private Dictionary<string, string[]> _functionContents = new();
         public Dictionary<string, object> Variables = new();
 
+        private string[] GetFunctionCommands(string functionName) {
+            return _functionContents[functionName];
+        }
+
         public Project(string name, string description, string id, int pack_format, Function load, Function main, List<Function> functions, List<List<Function>> matrix = null!, List<JsonFile> jsonFiles = null!)
         {
             // Display fresh SteveSharp Display
@@ -57,10 +61,10 @@ namespace SteveSharp
             );
             Displays.ProjectCreated();
             FunctionBuilder.BuildFunction(_load, _namespace, _packFormat, this, ref _functionContents);
-            File.WriteAllLines(loadPath, _functionContents[_load.Name]);
+            File.WriteAllLines(loadPath, GetFunctionCommands(_load.Name));
             Displays.WrittenFunction(_load.Name);
             FunctionBuilder.BuildFunction(_main, _namespace, _packFormat, this, ref _functionContents);
-            File.WriteAllLines(mainPath, _functionContents[_main.Name]);
+            File.WriteAllLines(mainPath, GetFunctionCommands(_main.Name));
             Displays.WrittenFunction(_main.Name);
 
             if (_functions.Count > 0)
@@ -99,7 +103,7 @@ namespace SteveSharp
                         Directory.CreateDirectory(directory);
                     }
                     FunctionBuilder.BuildFunction(function.Value, _namespace, _packFormat, this, ref _functionContents);
-                    File.WriteAllLines(FileOrganizer.GetFunctionPath(function.Value.Name), _functionContents[function.Value.Name]);
+                    File.WriteAllLines(FileOrganizer.GetFunctionPath(function.Value.Name), GetFunctionCommands(function.Value.Name));
                 }
 
             if (jsonFiles != null && jsonFiles.Count > 0)
