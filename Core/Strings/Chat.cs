@@ -9,12 +9,12 @@ namespace SteveSharp.Core.Strings
         {
             return $"say {msg}";
         }
-        public static string Out(string selector, TextComponent[] text)
+        public static string Tellraw(string selector, TextComponent[] text)
         {
             string command = "tellraw " + selector + " " + JsonSerializer.Serialize(text);
             return command;
         }
-        public static string Out(string selector, TextComponent text)
+        public static string Tellraw(string selector, TextComponent text)
         {
             string command = "tellraw " + selector + " " + JsonSerializer.Serialize(text);
             return command;
