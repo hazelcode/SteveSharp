@@ -9,6 +9,7 @@ namespace SteveSharp
         private readonly Function _load;
         private readonly Function _main;
         private readonly List<Function> _functions;
+        public Dictionary<string, object> Variables = new();
         public Project(string name, string description, string id, int pack_format, Function load, Function main, List<Function> functions, List<List<Function>> matrix = null!, List<JsonFile> jsonFiles = null!)
         {
             // Display fresh SteveSharp Display
