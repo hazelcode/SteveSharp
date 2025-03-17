@@ -5,15 +5,25 @@ namespace SteveSharp
 {
     public class Project
     {
+        private string _name { get; set; }
+
+        private string _description { get; set; }
+        private int _packFormat { get; set; }
+        private string _namespace { get; set; }
         public Dictionary<string, Function> FunctionIndex { get; set; }
         private readonly Function _load;
         private readonly Function _main;
         private readonly List<Function> _functions;
+        private Dictionary<string, string[]> _functionContents = new();
         public Dictionary<string, object> Variables = new();
+
         public Project(string name, string description, string id, int pack_format, Function load, Function main, List<Function> functions, List<List<Function>> matrix = null!, List<JsonFile> jsonFiles = null!)
         {
             // Display fresh SteveSharp Display
             Displays.SteveSharpDisplay(name);
+            _name = name;
+            _description = description;
+            _namespace = id;
             _load = load;
             _main = main;
             _functions = functions;
@@ -46,9 +56,11 @@ namespace SteveSharp
                 }, new JsonSerializerOptions { WriteIndented = true })
             );
             Displays.ProjectCreated();
-            File.WriteAllLines(loadPath, _load.Body);
+            FunctionBuilder.BuildFunction(_load, _namespace, _packFormat, this, ref _functionContents);
+            File.WriteAllLines(loadPath, _functionContents[_load.Name]);
             Displays.WrittenFunction(_load.Name);
-            File.WriteAllLines(mainPath, _main.Body);
+            FunctionBuilder.BuildFunction(_main, _namespace, _packFormat, this, ref _functionContents);
+            File.WriteAllLines(mainPath, _functionContents[_main.Name]);
             Displays.WrittenFunction(_main.Name);
 
             if (_functions.Count > 0)
@@ -86,7 +98,8 @@ namespace SteveSharp
                     {
                         Directory.CreateDirectory(directory);
                     }
-                    File.WriteAllLines(FileOrganizer.GetFunctionPath(function.Value.Name), function.Value.Body);
+                    FunctionBuilder.BuildFunction(function.Value, _namespace, _packFormat, this, ref _functionContents);
+                    File.WriteAllLines(FileOrganizer.GetFunctionPath(function.Value.Name), _functionContents[function.Value.Name]);
                 }
 
             if (jsonFiles != null && jsonFiles.Count > 0)

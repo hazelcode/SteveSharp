@@ -14,4 +14,18 @@ public static class FunctionBuilder {
     public static void Clear() {
         Commands.Clear();
     }
+
+    public static void BuildFunction(Function function, string id, int packFormat, Project project, ref Dictionary<string, string[]> contentsRepository) {
+        // Create context for the function and then, register the contents
+        var ctx = new FunctionContext(
+            function.Name,
+            id,
+            FileOrganizer.GetFunctionPath(function.Name),
+            packFormat,
+            project
+        );
+        contentsRepository.Add(function.Name, function.Body(ctx));
+        // Clear stored commands for last function
+        Clear();
+    }
 }
