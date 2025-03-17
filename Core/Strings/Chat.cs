@@ -9,6 +9,9 @@ namespace SteveSharp.Core.Strings
         {
             return $"say {msg}";
         }
+        public static string Tell(string targets, string message) {
+            return $"tell {targets} {message}";
+        }
         public static string Tellraw(string selector, TextComponent[] text)
         {
             string command = "tellraw " + selector + " " + JsonSerializer.Serialize(text);
