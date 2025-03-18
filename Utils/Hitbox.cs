@@ -1,4 +1,5 @@
 ﻿using SteveSharp.Core;
+using SteveSharp.Generic;
 using Str = SteveSharp.Core.Strings;
 
 namespace SteveSharp.Utils;
@@ -49,7 +50,7 @@ public class Hitbox {
         return new Function(
             name: $"{_ctx!.Namespace}:hitbox/{Workspace}/summon",
             body: (ctx) => {
-                Entity.Summon("interaction", [coords.x, coords.y, coords.y], "{Tags:[\"" + _ctx.Namespace + "." + Id + "\"],width:" + Width + ",height:" + Height + "}");
+                Entity.Summon(EntityEnum.Interaction, [coords.x, coords.y, coords.y], "{Tags:[\"" + _ctx.Namespace + "." + Id + "\"],width:" + Width + ",height:" + Height + "}");
                 Execute.Write(
                     Str.Execute.Asat(Entity.AllEntities("type=interaction,tag=" + _ctx.Namespace + "." + Id)) +
                     "on attacker ",

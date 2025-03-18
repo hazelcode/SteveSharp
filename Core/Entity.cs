@@ -1,4 +1,5 @@
-﻿using Str = SteveSharp.Core.Strings;
+﻿using SteveSharp.Generic;
+using Str = SteveSharp.Core.Strings;
 
 namespace SteveSharp.Core
 {
@@ -17,6 +18,7 @@ namespace SteveSharp.Core
         => FunctionBuilder.Add(Str.Entity.Custom(selector, limit, tags, scores, team, type, distance, area, level, gamemode, horizontalRotation, verticalRotation, sort));
         public static void Teleport(string selector, string to) => FunctionBuilder.Add(Str.Entity.Teleport(selector, to));
         public static void Summon(string entity, string[] pos, string nbt = "{}") => FunctionBuilder.Add(Str.Entity.Summon(entity, pos, nbt));
+        public static void Summon(EntityEnum entity, string[] pos, string nbt = "{}") => FunctionBuilder.Add(Str.Entity.Summon(entity, pos, nbt));
         public static void AddTag(string selector, string tag) => FunctionBuilder.Add(Str.Entity.AddTag(selector, tag));
         public static void RemoveTag(string selector, string tag) => FunctionBuilder.Add(Str.Entity.RemoveTag(selector, tag));
         public static void Kill(string selector) => FunctionBuilder.Add(Str.Entity.Kill(selector));
