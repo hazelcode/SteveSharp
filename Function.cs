@@ -26,5 +26,17 @@
         public string ScheduleSelf(string time, bool append = false, bool replace = false) => Schedule(Name, time, append, replace);
         public static string ClearSchedule(string function) => $"schedule clear {function}";
         public string ClearSchedule() => ClearSchedule(Name);
+
+        /// <summary>
+        /// Extend to another function from the current function
+        /// </summary>
+        /// <param name="function">The new function to assign</param>
+        /// <param name="ctx">The actual function context</param>
+        public static void Extend(Function function, FunctionContext ctx) {
+            FunctionBuilder.Add("function "+function.Name);
+            
+            // List the another function to build on project construction.
+            ctx.Project.FunctionIndex.Add(function.Name, function);
+        }
     }
 }

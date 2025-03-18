@@ -14,11 +14,11 @@ namespace SteveSharp
         private readonly Function _load;
         private readonly Function _main;
         private readonly List<Function> _functions;
-        private Dictionary<string, string[]> _functionContents = new();
+        public Dictionary<string, string[]> FunctionContents = new();
         public Dictionary<string, object> Variables = new();
 
         private string[] GetFunctionCommands(string functionName) {
-            return _functionContents[functionName];
+            return FunctionContents[functionName];
         }
 
         public Project(string name, string description, string id, PackFormat packFormat, Function load, Function main, List<Function> functions, List<List<Function>> matrix = null!, List<JsonFile> jsonFiles = null!)
@@ -61,10 +61,10 @@ namespace SteveSharp
                 }, new JsonSerializerOptions { WriteIndented = true })
             );
             Displays.ProjectCreated();
-            FunctionBuilder.BuildFunction(_load, _namespace, _packFormat, this, ref _functionContents);
+            FunctionBuilder.BuildFunction(_load, _namespace, _packFormat, this);
             File.WriteAllLines(loadPath, GetFunctionCommands(_load.Name));
             Displays.WrittenFunction(_load.Name);
-            FunctionBuilder.BuildFunction(_main, _namespace, _packFormat, this, ref _functionContents);
+            FunctionBuilder.BuildFunction(_main, _namespace, _packFormat, this);
             File.WriteAllLines(mainPath, GetFunctionCommands(_main.Name));
             Displays.WrittenFunction(_main.Name);
 
@@ -103,7 +103,7 @@ namespace SteveSharp
                     {
                         Directory.CreateDirectory(directory);
                     }
-                    FunctionBuilder.BuildFunction(function.Value, _namespace, _packFormat, this, ref _functionContents);
+                    FunctionBuilder.BuildFunction(function.Value, _namespace, _packFormat, this);
                     File.WriteAllLines(FileOrganizer.GetFunctionPath(function.Value.Name), GetFunctionCommands(function.Value.Name));
                 }
 

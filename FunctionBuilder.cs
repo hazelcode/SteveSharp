@@ -22,7 +22,7 @@ public static class FunctionBuilder {
         Commands.Clear();
     }
 
-    public static void BuildFunction(Function function, string id, int packFormat, Project project, ref Dictionary<string, string[]> contentsRepository) {
+    public static void BuildFunction(Function function, string id, int packFormat, Project project) {
         // Create context for the function and then, register the contents
         var ctx = new FunctionContext(
             function.Name,
@@ -31,7 +31,7 @@ public static class FunctionBuilder {
             packFormat,
             project
         );
-        contentsRepository.Add(function.Name, function.Body(ctx));
+        project.FunctionContents.Add(function.Name, function.Body(ctx));
         // Clear stored commands for last function
         Clear();
     }
