@@ -1,4 +1,5 @@
-﻿using SteveSharp.JsonShapes;
+﻿using SteveSharp.Internal;
+using SteveSharp.JsonShapes;
 using System.Text.Json;
 
 namespace SteveSharp
@@ -32,6 +33,7 @@ namespace SteveSharp
             _load = load;
             _main = main;
             _functions = functions;
+            Context.PackFormat = packFormat;
             FunctionIndex = new Dictionary<string, Function>();
             string loadPath = FileOrganizer.GetFunctionPath(_load.Name);
             string mainPath = FileOrganizer.GetFunctionPath(_main.Name);
