@@ -1,4 +1,5 @@
-﻿using Str = SteveSharp.Core.Strings;
+﻿using SteveSharp.Generic;
+using Str = SteveSharp.Core.Strings;
 
 namespace SteveSharp.Core
 {
@@ -25,37 +26,65 @@ namespace SteveSharp.Core
             }
             FunctionBuilder.Add(commands);
         }
-        public void Set(int count, string selector = "")
+        public void Set(int count, string targets = "")
         {
-            Set(id, count, selector);
+            FunctionBuilder.Add(Str.Score.Set(id, count, targets));
         }
-        public static void Set(string id, int count, string selector = "")
+        public void Set(int count, EntityTarget targets)
         {
-            FunctionBuilder.Add(Str.Score.Set(id, count, selector));
+            FunctionBuilder.Add(Str.Score.Set(id, count, targets));
         }
-        public void Add(int count, string selector = "")
+        public static void Set(string id, int count, string targets = "")
         {
-            Add(id, count, selector);
+            FunctionBuilder.Add(Str.Score.Set(id, count, targets));
         }
-        public static void Add(string id, int count, string selector = "")
+        public void Add(int count, string targets = "")
         {
-            FunctionBuilder.Add(Str.Score.Add(id, count, selector));
+            FunctionBuilder.Add(Str.Score.Add(id, count, targets));
         }
-        public void Remove(int count, string selector = "")
+        public void Add(int count, EntityTarget targets)
         {
-            Remove(id, count, selector);
+            FunctionBuilder.Add(Str.Score.Add(id, count, targets));
         }
-        public static void Remove(string id, int count, string selector = "")
+        public static void Add(string id, int count, string targets = "")
         {
-            FunctionBuilder.Add(Str.Score.Remove(id, count, selector));
+            FunctionBuilder.Add(Str.Score.Add(id, count, targets));
         }
-        public void Reset(string selector = "")
+        public static void Add(string id, int count, EntityTarget targets)
         {
-            Reset(id, selector);
+            FunctionBuilder.Add(Str.Score.Add(id, count, targets));
         }
-        public static void Reset(string id, string selector = "")
+        public void Remove(int count, string targets = "")
         {
-            FunctionBuilder.Add(Str.Score.Reset(id, selector));
+            FunctionBuilder.Add(Str.Score.Remove(id, count, targets));
+        }
+        public void Remove(int count, EntityTarget targets)
+        {
+            FunctionBuilder.Add(Str.Score.Remove(id, count, targets));
+        }
+        public static void Remove(string id, int count, string targets = "")
+        {
+            FunctionBuilder.Add(Str.Score.Remove(id, count, targets));
+        }
+        public static void Remove(string id, int count, EntityTarget targets)
+        {
+            FunctionBuilder.Add(Str.Score.Remove(id, count, targets));
+        }
+        public void Reset(string targets = "")
+        {
+            FunctionBuilder.Add(Str.Score.Reset(id, targets));
+        }
+        public void Reset(EntityTarget targets)
+        {
+            FunctionBuilder.Add(Str.Score.Reset(id, targets));
+        }
+        public static void Reset(string id, string targets = "")
+        {
+            FunctionBuilder.Add(Str.Score.Reset(id, targets));
+        }
+        public static void Reset(string id, EntityTarget targets)
+        {
+            FunctionBuilder.Add(Str.Score.Reset(id, targets));
         }
         /// <summary>
         /// Only for use in scores={} cases
@@ -63,6 +92,13 @@ namespace SteveSharp.Core
         /// <returns></returns>
         public string Matches(int value){
             return this.id + '=' + value;
+        }
+        /// <summary>
+        /// Only for use in scores={} cases
+        /// </summary>
+        /// <returns></returns>
+        public static string Matches(string id, int value){
+            return id + '=' + value;
         }
     }
 }

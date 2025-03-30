@@ -1,4 +1,6 @@
-﻿namespace SteveSharp.Core.Strings
+﻿using SteveSharp.Generic;
+
+namespace SteveSharp.Core.Strings
 {
     public class Score
     {
@@ -34,64 +36,95 @@
             }
             return commands;
         }
-        public string Set(int count, string selector = "")
+        public string Set(int count, string targets = "")
         {
-            return Set(id, count, selector);
+            return Set(id, count, targets);
         }
-        public static string Set(string id, int count, string selector = "")
+        public string Set(int count, EntityTarget targets)
         {
-            if(selector == "")
+            return Set(id, count, EntityTargetHandler.Get(targets));
+        }
+        public static string Set(string id, int count, string targets = "")
+        {
+            if(targets == "")
             {
                 return $"scoreboard players set #{id} {id} {count}";
             } else
             {
-                return $"scoreboard players set {selector} {id} {count}";
+                return $"scoreboard players set {targets} {id} {count}";
             }
         }
-        public string Add(int count, string selector = "")
+        public static string Set(string id, int count, EntityTarget targets)
         {
-            return Add(id, count, selector);
+            return $"scoreboard players set {EntityTargetHandler.Get(targets)} {id} {count}";
         }
-        public static string Add(string id, int count, string selector = "")
+        public string Add(int count, string targets = "")
         {
-            if (selector == "")
+            return Add(id, count, targets);
+        }
+        public string Add(int count, EntityTarget targets) {
+            return Add(id, count, EntityTargetHandler.Get(targets));
+        }
+        public static string Add(string id, int count, string targets = "")
+        {
+            if (targets == "")
             {
                 return $"scoreboard players add #{id} {id} {count}";
             }
             else
             {
-                return $"scoreboard players add {selector} {id} {count}";
+                return $"scoreboard players add {targets} {id} {count}";
             }
         }
-        public string Remove(int count, string selector = "")
+        public static string Add(string id, int count, EntityTarget targets)
         {
-            return Remove(id, count, selector);
+            return $"scoreboard players add {EntityTargetHandler.Get(targets)} {id} {count}";
         }
-        public static string Remove(string id, int count, string selector = "")
+        public string Remove(int count, string targets = "")
         {
-            if (selector == "")
+            return Remove(id, count, targets);
+        }
+        public string Remove(int count, EntityTarget targets)
+        {
+            return Remove(id, count, targets);
+        }
+        public static string Remove(string id, int count, string targets = "")
+        {
+            if (targets == "")
             {
                 return $"scoreboard players remove #{id} {id} {count}";
             }
             else
             {
-                return $"scoreboard players remove {selector} {id} {count}";
+                return $"scoreboard players remove {targets} {id} {count}";
             }
         }
-        public string Reset(string selector = "")
+        public static string Remove(string id, int count, EntityTarget targets)
         {
-            return Reset(id, selector);
+            return $"scoreboard players remove {EntityTargetHandler.Get(targets)} {id} {count}";
         }
-        public static string Reset(string id, string selector = "")
+        public string Reset(string targets = "")
         {
-            if (selector == "")
+            return Reset(id, targets);
+        }
+        public string Reset(EntityTarget targets)
+        {
+            return Reset(id, EntityTargetHandler.Get(targets));
+        }
+        public static string Reset(string id, string targets = "")
+        {
+            if (targets == "")
             {
                 return $"scoreboard players reset #{id} {id}";
             }
             else
             {
-                return $"scoreboard players reset {selector} {id}";
+                return $"scoreboard players reset {targets} {id}";
             }
+        }
+        public static string Reset(string id, EntityTarget targets)
+        {
+            return $"scoreboard players reset {EntityTargetHandler.Get(targets)} {id}";
         }
         /// <summary>
         /// Only for use in scores={} cases
@@ -100,6 +133,10 @@
         public string Matches(int value){
             return Matches(id, value);
         }
+        /// <summary>
+        /// Only for use in scores={} cases
+        /// </summary>
+        /// <returns></returns>
         public static string Matches(string id, int value){
             return id + '=' + value;
         }
