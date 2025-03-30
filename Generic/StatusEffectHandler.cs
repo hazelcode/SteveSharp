@@ -1,6 +1,3 @@
-using SteveSharp.Exceptions;
-using SteveSharp.Internal;
-
 namespace SteveSharp.Generic;
 
 // https://www.digminecraft.com/lists/effect_list_pc.php

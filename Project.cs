@@ -1,5 +1,4 @@
 ﻿using SteveSharp.Exceptions;
-using SteveSharp.Internal;
 using SteveSharp.JsonShapes;
 using System.Text.Json;
 
@@ -34,7 +33,6 @@ namespace SteveSharp
             _load = load;
             _main = main;
             _functions = functions;
-            Context.PackFormat = packFormat;
             FunctionIndex = new Dictionary<string, Function>();
             string loadPath = FileOrganizer.GetFunctionPath(_load.Name);
             string mainPath = FileOrganizer.GetFunctionPath(_main.Name);
@@ -67,13 +65,13 @@ namespace SteveSharp
             File.WriteAllText($"data/minecraft/tags/functions/load.json",
                 JsonSerializer.Serialize(new Tag
                 {
-                    values = new string[] { _load.Name }
+                    values = [_load.Name]
                 }, new JsonSerializerOptions { WriteIndented = true })
             );
             File.WriteAllText($"data/minecraft/tags/functions/tick.json",
                 JsonSerializer.Serialize(new Tag
                 {
-                    values = new string[] { _main.Name }
+                    values = [_main.Name]
                 }, new JsonSerializerOptions { WriteIndented = true })
             );
             Displays.ProjectCreated();
