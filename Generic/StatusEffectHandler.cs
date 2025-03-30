@@ -4,8 +4,8 @@ using SteveSharp.Internal;
 namespace SteveSharp.Generic;
 
 // https://www.digminecraft.com/lists/effect_list_pc.php
-public static class StatusEffectHandler {
-    public static string Get(StatusEffect effect) {
+internal static class StatusEffectHandler {
+    internal static string Get(StatusEffect effect) {
         Dictionary<StatusEffect, string> statusEffectStr = new() {
             {StatusEffect.Absorption, "absorption"},
             {StatusEffect.BadLuck, "unluck"},

@@ -1,7 +1,7 @@
 namespace SteveSharp.Generic;
 
 internal static class EntityHandler {
-    public static string Get(EntityEnum entityEnum) {
+    internal static string Get(EntityEnum entityEnum) {
         // https://www.digminecraft.com/lists/entity_list_pc.php
         Dictionary<EntityEnum, string> entityEnumStr = new() {
             {EntityEnum.Allay, "minecraft:allay"},
