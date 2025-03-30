@@ -47,18 +47,6 @@ public static class StatusEffectHandler {
             {StatusEffect.WindCharged, "wind_charged"},
             {StatusEffect.Wither, "wither"}
         };
-        if(
-            Context.PackFormat < PackFormat.Format48
-            && (effect == StatusEffect.Infested
-            || effect == StatusEffect.Oozing
-            || effect == StatusEffect.RaidOmen
-            || effect == StatusEffect.TrialOmen
-            || effect == StatusEffect.Weaving
-            || effect == StatusEffect.WindCharged)
-        ) {
-            // Only available for Minecraft 1.21
-            throw new DatapackFeatureException(effect, PackFormat.Format48);
-        }
         return statusEffectStr[effect];
     }
 }
