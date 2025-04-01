@@ -46,7 +46,7 @@ public enum EntityEnum {
     FireworkRocket,
     Fox,
     Frog,
-    MinecarftWithFurnace,
+    MinecartWithFurnace,
     Ghast,
     Giant,
     GlowItemFrame,
