@@ -26,7 +26,7 @@ public class Hitbox {
     }
 
     public string Invoke() {
-        return Function.Call($"{_ctx!.Namespace}:hitbox/{Workspace}/summon");
+        return Str.Function.Call($"{_ctx!.Namespace}:hitbox/{Workspace}/summon");
     }
     public Function OnAttack(Action<FunctionContext> body) {
         return new Function(
@@ -54,12 +54,12 @@ public class Hitbox {
                 Execute.Write(
                     Str.Execute.Asat(Entity.AllEntities("type=interaction,tag=" + _ctx.Namespace + "." + Id)) +
                     "on attacker ",
-                    [Function.Call($"{_ctx.Namespace}:hitbox/{Workspace}/on_attack")]
+                    [Str.Function.Call($"{_ctx.Namespace}:hitbox/{Workspace}/on_attack")]
                 );
                 Execute.Write(
                     Str.Execute.Asat(Entity.AllEntities("type=interaction,tag=" + _ctx.Namespace + "." + Id)) +
                     "on target ",
-                    [Function.Call($"{_ctx.Namespace}:hitbox/{Workspace}/on_right_click")]
+                    [Str.Function.Call($"{_ctx.Namespace}:hitbox/{Workspace}/on_right_click")]
                 );
                 Entity.Kill(Entity.AllEntities("type=interaction,tag=" + _ctx.Namespace + "." + Id));
                 return FunctionBuilder.Collect();

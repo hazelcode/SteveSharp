@@ -1,4 +1,6 @@
-﻿namespace SteveSharp
+﻿using Str = SteveSharp.Core.Strings;
+
+namespace SteveSharp
 {
     public class Function
     {
@@ -10,22 +12,14 @@
             Body = body;
             Displays.NewFunction(name);
         }
-        public static string Return(int i)
-        {
-            return "return " + i;
+        public static void Return(int i) => FunctionBuilder.Add(Str.Function.Return(i));
+        public static void Call(string function) => FunctionBuilder.Add(Str.Function.Call(function));
+        public static void Schedule(string function, string time, bool append = false, bool replace = false) {
+            FunctionBuilder.Add(Str.Function.Schedule(function, time, append, replace));
         }
-        public static string Call(string function)
-        {
-            return "function " + function;
-        }
-        public static string Schedule(string function, string time, bool append = false, bool replace = false) {
-            if(append && !replace) return $"schedule function {function} {time} append";
-            else if(!append && replace) return $"schedule function {function} {time} replace";
-            else return $"schedule function {function} {time}";
-        }
-        public string ScheduleSelf(string time, bool append = false, bool replace = false) => Schedule(Name, time, append, replace);
-        public static string ClearSchedule(string function) => $"schedule clear {function}";
-        public string ClearSchedule() => ClearSchedule(Name);
+        public void ScheduleSelf(string time, bool append = false, bool replace = false) => FunctionBuilder.Add(Str.Function.Schedule(Name, time, append, replace));
+        public static void ClearSchedule(string function) => FunctionBuilder.Add(Str.Function.ClearSchedule(function));
+        public void ClearSchedule() => ClearSchedule(Name);
 
         /// <summary>
         /// Extend to another function from the current function
