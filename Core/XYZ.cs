@@ -11,7 +11,7 @@
                 '~' + (y == 0 ? "" : y.ToString()),
                 '~' + (z == 0 ? "" : z.ToString()));
         public static string[] Pos(int a, int b, int c) {
-            return ["^"+b, "^"+b, "^"+c];
+            return ["^"+a, "^"+b, "^"+c];
         }
         public static string[] Pos(string a, string b, string c) {
             return ['^'+a, '^'+b, '^'+c];
