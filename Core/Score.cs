@@ -5,14 +5,12 @@ namespace SteveSharp.Core
 {
     public class Score
     {
-        public int count = 0;
         public string id;
         public string type;
         public string name;
-        public Score(string id, string type = "dummy", string name = "", int count = 0)
+        public Score(string id, string type = "dummy", string name = "")
         {
             this.id = id;
-            this.count = count;
             this.type = type;
             this.name = name;
         }
@@ -100,5 +98,156 @@ namespace SteveSharp.Core
         public static string Matches(string id, int value){
             return id + '=' + value;
         }
+#region operators
+        public static Score operator + (Score a, int b) {
+            FunctionBuilder.Add($"scoreboard players add #{a.id} {a.id} {b}");
+            return a;
+        }
+        public static Score operator - (Score a, int b) {
+            FunctionBuilder.Add($"scoreboard players remove #{a.id} {a.id} {b}");
+            return a;
+        }
+        public static Score operator * (Score a, int b) {
+            FunctionBuilder.Add(
+                $"scoreboard players set #{a.id}_temp {a.id} {b}\n"+
+                $"scoreboard players operation #{a.id} {a.id} *= #{a.id}_temp {a.id}\n"+
+                $"scoreboard players reset #{a.id}_temp {a.id}"
+            );
+            return a;
+        }
+        public static Score operator / (Score a, int b) {
+            FunctionBuilder.Add(
+                $"scoreboard players set #{a.id}_temp {a.id} {b}\n"+
+                $"scoreboard players operation #{a.id} {a.id} /= #{a.id}_temp {a.id}\n"+
+                $"scoreboard players reset #{a.id}_temp {a.id}"
+            );
+            return a;
+        }
+        public static Score operator % (Score a, int b) {
+            FunctionBuilder.Add(
+                $"scoreboard players set #{a.id}_temp {a.id} {b}\n"+
+                $"scoreboard players operation #{a.id} {a.id} %= #{a.id}_temp {a.id}\n"+
+                $"scoreboard players reset #{a.id}_temp {a.id}"
+            );
+            return a;
+        }
+        public static Score operator + (Score a, Score b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} += #{b.id} {b.id}");
+            return a;
+        }
+        public static Score operator - (Score a, Score b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} -= #{b.id} {b.id}");
+            return a;
+        }
+        public static Score operator * (Score a, Score b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} *= #{b.id} {b.id}");
+            return a;
+        }
+        public static Score operator / (Score a, Score b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} /= #{b.id} {b.id}");
+            return a;
+        }
+        public static Score operator % (Score a, Score b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} %= #{b.id} {b.id}");
+            return a;
+        }
+        public static Score operator + (Score a, EntityTarget b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} += {EntityTargetHandler.Get(b)} {a.id}");
+            return a;
+        }
+        public static Score operator - (Score a, EntityTarget b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} -= {EntityTargetHandler.Get(b)} {a.id}");
+            return a;
+        }
+        public static Score operator * (Score a, EntityTarget b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} *= {EntityTargetHandler.Get(b)} {a.id}");
+            return a;
+        }
+        public static Score operator / (Score a, EntityTarget b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} /= {EntityTargetHandler.Get(b)} {a.id}");
+            return a;
+        }
+        public static Score operator % (Score a, EntityTarget b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} %= {EntityTargetHandler.Get(b)} {a.id}");
+            return a;
+        }
+        public static Score operator + (Score a, string b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} += {b} {a.id}");
+            return a;
+        }
+        public static Score operator - (Score a, string b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} -= {b} {a.id}");
+            return a;
+        }
+        public static Score operator * (Score a, string b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} *= {b} {a.id}");
+            return a;
+        }
+        public static Score operator / (Score a, string b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} /= {b} {a.id}");
+            return a;
+        }
+        public static Score operator % (Score a, string b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} %= {b} {a.id}");
+            return a;
+        }
+        public static bool operator == (Score a, int b) {
+            FunctionBuilder.Add($"execute if score #{a.id} myVariable matches {b} run \\");
+            return true;
+        }
+        public static bool operator != (Score a, int b) {
+            FunctionBuilder.Add($"execute unless score #{a.id} {a.id} matches {b} run \\");
+            return true;
+        }
+        public static bool operator >= (Score a, int b) {
+            FunctionBuilder.Add($"execute if score #{a.id} {a.id} matches {b}.. run \\");
+            return true;
+        }
+        public static bool operator <= (Score a, int b) {
+            FunctionBuilder.Add($"execute if score #{a.id} {a.id} matches ..{b} run \\");
+            return true;
+        }
+        public static bool operator > (Score a, int b) {
+            FunctionBuilder.Add($"execute unless score #{a.id} {a.id} matches ..{b}");
+            return true;
+        }
+        public static bool operator < (Score a, int b) {
+            FunctionBuilder.Add($"execute unless score #{a.id} {a.id} matches {b}..");
+            return true;
+        }
+        public static bool operator == (Score a, Score b) {
+            FunctionBuilder.Add($"execute if score #{a.id} {a.id} = #{b.id} {b.id} run \\");
+            return true;
+        }
+        public static bool operator != (Score a, Score b) {
+            FunctionBuilder.Add($"execute unless score #{a.id} {a.id} = #{b.id} {b.id} run \\");
+            return true;
+        }
+        public static bool operator >= (Score a, Score b) {
+            FunctionBuilder.Add($"execute if score #{a.id} {a.id} >= #{b.id} {b.id} run \\");
+            return true;
+        }
+        public static bool operator <= (Score a, Score b) {
+            FunctionBuilder.Add($"execute if score #{a.id} {a.id} <= #{b.id} {b.id} run \\");
+            return true;
+        }
+        public static bool operator > (Score a, Score b) {
+            FunctionBuilder.Add($"execute if score #{a.id} {a.id} > #{b.id} {b.id} run \\");
+            return true;
+        }
+        public static bool operator < (Score a, Score b) {
+            FunctionBuilder.Add($"execute if score #{a.id} {a.id} < #{b.id} {b.id} run \\");
+            return true;
+        }
+#endregion
+        public override bool Equals(object? obj) {
+            if(obj is Score s) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    public override int GetHashCode() => GetHashCode();
     }
 }
