@@ -28,7 +28,7 @@ namespace SteveSharp.Core
         {
             FunctionBuilder.Add(Str.Score.Set(id, count, targets));
         }
-        public void Set(int count, EntityTarget targets)
+        public void Set(int count, Targets targets)
         {
             FunctionBuilder.Add(Str.Score.Set(id, count, targets));
         }
@@ -40,7 +40,7 @@ namespace SteveSharp.Core
         {
             FunctionBuilder.Add(Str.Score.Add(id, count, targets));
         }
-        public void Add(int count, EntityTarget targets)
+        public void Add(int count, Targets targets)
         {
             FunctionBuilder.Add(Str.Score.Add(id, count, targets));
         }
@@ -48,7 +48,7 @@ namespace SteveSharp.Core
         {
             FunctionBuilder.Add(Str.Score.Add(id, count, targets));
         }
-        public static void Add(string id, int count, EntityTarget targets)
+        public static void Add(string id, int count, Targets targets)
         {
             FunctionBuilder.Add(Str.Score.Add(id, count, targets));
         }
@@ -56,7 +56,7 @@ namespace SteveSharp.Core
         {
             FunctionBuilder.Add(Str.Score.Remove(id, count, targets));
         }
-        public void Remove(int count, EntityTarget targets)
+        public void Remove(int count, Targets targets)
         {
             FunctionBuilder.Add(Str.Score.Remove(id, count, targets));
         }
@@ -64,7 +64,7 @@ namespace SteveSharp.Core
         {
             FunctionBuilder.Add(Str.Score.Remove(id, count, targets));
         }
-        public static void Remove(string id, int count, EntityTarget targets)
+        public static void Remove(string id, int count, Targets targets)
         {
             FunctionBuilder.Add(Str.Score.Remove(id, count, targets));
         }
@@ -72,7 +72,7 @@ namespace SteveSharp.Core
         {
             FunctionBuilder.Add(Str.Score.Reset(id, targets));
         }
-        public void Reset(EntityTarget targets)
+        public void Reset(Targets targets)
         {
             FunctionBuilder.Add(Str.Score.Reset(id, targets));
         }
@@ -80,7 +80,7 @@ namespace SteveSharp.Core
         {
             FunctionBuilder.Add(Str.Score.Reset(id, targets));
         }
-        public static void Reset(string id, EntityTarget targets)
+        public static void Reset(string id, Targets targets)
         {
             FunctionBuilder.Add(Str.Score.Reset(id, targets));
         }
@@ -151,24 +151,24 @@ namespace SteveSharp.Core
             FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} %= #{b.id} {b.id}");
             return a;
         }
-        public static Score operator + (Score a, EntityTarget b) {
-            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} += {EntityTargetHandler.Get(b)} {a.id}");
+        public static Score operator + (Score a, Targets b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} += {TargetsHandler.Get(b)} {a.id}");
             return a;
         }
-        public static Score operator - (Score a, EntityTarget b) {
-            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} -= {EntityTargetHandler.Get(b)} {a.id}");
+        public static Score operator - (Score a, Targets b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} -= {TargetsHandler.Get(b)} {a.id}");
             return a;
         }
-        public static Score operator * (Score a, EntityTarget b) {
-            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} *= {EntityTargetHandler.Get(b)} {a.id}");
+        public static Score operator * (Score a, Targets b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} *= {TargetsHandler.Get(b)} {a.id}");
             return a;
         }
-        public static Score operator / (Score a, EntityTarget b) {
-            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} /= {EntityTargetHandler.Get(b)} {a.id}");
+        public static Score operator / (Score a, Targets b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} /= {TargetsHandler.Get(b)} {a.id}");
             return a;
         }
-        public static Score operator % (Score a, EntityTarget b) {
-            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} %= {EntityTargetHandler.Get(b)} {a.id}");
+        public static Score operator % (Score a, Targets b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} %= {TargetsHandler.Get(b)} {a.id}");
             return a;
         }
         public static Score operator + (Score a, string b) {

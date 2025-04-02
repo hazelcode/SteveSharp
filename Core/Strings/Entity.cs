@@ -8,8 +8,8 @@ namespace SteveSharp.Core.Strings
         /// This method selects an entity with specific matches, recommended if you want to select an entity with specific matches.
         /// </summary>
         /// <returns></returns>
-        public static string Custom(EntityTarget targets, int? limit = null, string[]? tags = null, string[]? scores = null, string? team = null, string? type = null, string? distance = null, string? area = null, string? level = null, string? gamemode = null, string? horizontalRotation = null, string? verticalRotation = null, string? sort = null)
-            => Custom(EntityTargetHandler.Get(targets), limit, tags, scores, team, type, distance, area, level, gamemode, horizontalRotation, verticalRotation, sort);
+        public static string Custom(Targets targets, int? limit = null, string[]? tags = null, string[]? scores = null, string? team = null, string? type = null, string? distance = null, string? area = null, string? level = null, string? gamemode = null, string? horizontalRotation = null, string? verticalRotation = null, string? sort = null)
+            => Custom(TargetsHandler.Get(targets), limit, tags, scores, team, type, distance, area, level, gamemode, horizontalRotation, verticalRotation, sort);
         /// <summary>
         /// This method selects an entity with specific matches, recommended if you want to select an entity with specific matches.
         /// </summary>
@@ -44,9 +44,9 @@ namespace SteveSharp.Core.Strings
             match += ']';
             return match;
         }
-        public static string Teleport(EntityTarget targets, string to)
+        public static string Teleport(Targets targets, string to)
         {
-            return $"tp {EntityTargetHandler.Get(targets)} {to}";
+            return $"tp {TargetsHandler.Get(targets)} {to}";
         }
         public static string Teleport(string targets, string to)
         {
@@ -75,25 +75,25 @@ namespace SteveSharp.Core.Strings
         {
             return $"summon {entity} {pos[0]} {pos[1]} {pos[2]} {nbt}";
         }
-        public static string AddTag(EntityTarget targets, string tag)
+        public static string AddTag(Targets targets, string tag)
         {
-            return $"tag {EntityTargetHandler.Get(targets)} add {tag}";
+            return $"tag {TargetsHandler.Get(targets)} add {tag}";
         }
         public static string AddTag(string targets, string tag)
         {
             return $"tag {targets} add {tag}";
         }
-        public static string RemoveTag(EntityTarget targets, string tag)
+        public static string RemoveTag(Targets targets, string tag)
         {
-            return $"tag {EntityTargetHandler.Get(targets)} remove {tag}";
+            return $"tag {TargetsHandler.Get(targets)} remove {tag}";
         }
         public static string RemoveTag(string targets, string tag)
         {
             return $"tag {targets} remove {tag}";
         }
-        public static string Kill(EntityTarget targets)
+        public static string Kill(Targets targets)
         {
-            return $"kill {EntityTargetHandler.Get(targets)}";
+            return $"kill {TargetsHandler.Get(targets)}";
         }
         public static string Kill(string targets)
         {

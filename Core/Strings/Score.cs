@@ -40,9 +40,9 @@ namespace SteveSharp.Core.Strings
         {
             return Set(id, count, targets);
         }
-        public string Set(int count, EntityTarget targets)
+        public string Set(int count, Targets targets)
         {
-            return Set(id, count, EntityTargetHandler.Get(targets));
+            return Set(id, count, TargetsHandler.Get(targets));
         }
         public static string Set(string id, int count, string targets = "")
         {
@@ -54,16 +54,16 @@ namespace SteveSharp.Core.Strings
                 return $"scoreboard players set {targets} {id} {count}";
             }
         }
-        public static string Set(string id, int count, EntityTarget targets)
+        public static string Set(string id, int count, Targets targets)
         {
-            return $"scoreboard players set {EntityTargetHandler.Get(targets)} {id} {count}";
+            return $"scoreboard players set {TargetsHandler.Get(targets)} {id} {count}";
         }
         public string Add(int count, string targets = "")
         {
             return Add(id, count, targets);
         }
-        public string Add(int count, EntityTarget targets) {
-            return Add(id, count, EntityTargetHandler.Get(targets));
+        public string Add(int count, Targets targets) {
+            return Add(id, count, TargetsHandler.Get(targets));
         }
         public static string Add(string id, int count, string targets = "")
         {
@@ -76,15 +76,15 @@ namespace SteveSharp.Core.Strings
                 return $"scoreboard players add {targets} {id} {count}";
             }
         }
-        public static string Add(string id, int count, EntityTarget targets)
+        public static string Add(string id, int count, Targets targets)
         {
-            return $"scoreboard players add {EntityTargetHandler.Get(targets)} {id} {count}";
+            return $"scoreboard players add {TargetsHandler.Get(targets)} {id} {count}";
         }
         public string Remove(int count, string targets = "")
         {
             return Remove(id, count, targets);
         }
-        public string Remove(int count, EntityTarget targets)
+        public string Remove(int count, Targets targets)
         {
             return Remove(id, count, targets);
         }
@@ -99,17 +99,17 @@ namespace SteveSharp.Core.Strings
                 return $"scoreboard players remove {targets} {id} {count}";
             }
         }
-        public static string Remove(string id, int count, EntityTarget targets)
+        public static string Remove(string id, int count, Targets targets)
         {
-            return $"scoreboard players remove {EntityTargetHandler.Get(targets)} {id} {count}";
+            return $"scoreboard players remove {TargetsHandler.Get(targets)} {id} {count}";
         }
         public string Reset(string targets = "")
         {
             return Reset(id, targets);
         }
-        public string Reset(EntityTarget targets)
+        public string Reset(Targets targets)
         {
-            return Reset(id, EntityTargetHandler.Get(targets));
+            return Reset(id, TargetsHandler.Get(targets));
         }
         public static string Reset(string id, string targets = "")
         {
@@ -122,9 +122,9 @@ namespace SteveSharp.Core.Strings
                 return $"scoreboard players reset {targets} {id}";
             }
         }
-        public static string Reset(string id, EntityTarget targets)
+        public static string Reset(string id, Targets targets)
         {
-            return $"scoreboard players reset {EntityTargetHandler.Get(targets)} {id}";
+            return $"scoreboard players reset {TargetsHandler.Get(targets)} {id}";
         }
         /// <summary>
         /// Only for use in scores={} cases

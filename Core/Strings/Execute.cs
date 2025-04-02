@@ -15,25 +15,25 @@ namespace SteveSharp.Core.Strings
             }
             return allCommands;
         }
-        public static string As(EntityTarget targets, string addition = "")
+        public static string As(Targets targets, string addition = "")
         {
-            return "as " + EntityTargetHandler.Get(targets) + " " + addition;
+            return "as " + TargetsHandler.Get(targets) + " " + addition;
         }
         public static string As(string targets, string addition = "")
         {
             return "as " + targets + " " + addition;
         }
-        public static string At(EntityTarget targets, string addition = "")
+        public static string At(Targets targets, string addition = "")
         {
-            return "at " + EntityTargetHandler.Get(targets) + " " + addition;
+            return "at " + TargetsHandler.Get(targets) + " " + addition;
         }
         public static string At(string targets, string addition = "")
         {
             return "at " + targets + " " + addition;
         }
-        public static string Asat(EntityTarget targets, string addition = "")
+        public static string Asat(Targets targets, string addition = "")
         {
-            return "as " + EntityTargetHandler.Get(targets) + " at @s " + addition;
+            return "as " + TargetsHandler.Get(targets) + " at @s " + addition;
         }
         public static string Asat(string targets, string addition = "")
         {
@@ -59,9 +59,9 @@ namespace SteveSharp.Core.Strings
         {
             return "store " + where + " " + at + " " + arguments + " " + addition;
         }
-        public static string StoreScore(string where, Core.Score score, EntityTarget targets, string addition = "")
+        public static string StoreScore(string where, Core.Score score, Targets targets, string addition = "")
         {
-            return "store " + where + " score " + EntityTargetHandler.Get(targets) + " " + score.id + " " + addition;
+            return "store " + where + " score " + TargetsHandler.Get(targets) + " " + score.id + " " + addition;
         }
         public static string StoreScore(string where, Core.Score score, string targets = "", string addition = "")
         {

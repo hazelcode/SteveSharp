@@ -1,6 +1,6 @@
 namespace SteveSharp.Generic;
 
-public enum EntityTarget {
+public enum Targets {
     NearestPlayer,
     RandomPlayer,
     AllPlayers,
