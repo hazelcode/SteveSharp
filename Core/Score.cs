@@ -171,24 +171,64 @@ namespace SteveSharp.Core
             FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} %= {TargetsHandler.Get(b)} {a.id}");
             return a;
         }
+        public static Score operator + (Score a, (string targets, Score scoreboard) b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} += {b.targets} {b.scoreboard.id}");
+            return a;
+        }
+        public static Score operator - (Score a, (string targets, Score scoreboard) b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} -= {b.targets} {b.scoreboard.id}");
+            return a;
+        }
+        public static Score operator * (Score a, (string targets, Score scoreboard) b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} *= {b.targets} {b.scoreboard.id}");
+            return a;
+        }
+        public static Score operator / (Score a, (string targets, Score scoreboard) b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} /= {b.targets} {b.scoreboard.id}");
+            return a;
+        }
+        public static Score operator % (Score a, (string targets, Score scoreboard) b) {
+            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} %= {b.targets} {b.scoreboard.id}");
+            return a;
+        }
         public static Score operator + (Score a, string b) {
-            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} += {b} {a.id}");
+            FunctionBuilder.Add(
+                $"execute store result score #{a.id}_temp {a.id} run {b}\n"+
+                $"scoreboard players operation #{a.id} {a.id} += #{a.id}_temp {a.id}\n"+
+                $"scoreboard players reset #{a.id}_temp"
+            );
             return a;
         }
         public static Score operator - (Score a, string b) {
-            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} -= {b} {a.id}");
+            FunctionBuilder.Add(
+                $"execute store result score #{a.id}_temp {a.id} run {b}\n"+
+                $"scoreboard players operation #{a.id} {a.id} -= #{a.id}_temp {a.id}\n"+
+                $"scoreboard players reset #{a.id}_temp"
+            );
             return a;
         }
         public static Score operator * (Score a, string b) {
-            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} *= {b} {a.id}");
+            FunctionBuilder.Add(
+                $"execute store result score #{a.id}_temp {a.id} run {b}\n"+
+                $"scoreboard players operation #{a.id} {a.id} *= #{a.id}_temp {a.id}\n"+
+                $"scoreboard players reset #{a.id}_temp"
+            );
             return a;
         }
         public static Score operator / (Score a, string b) {
-            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} /= {b} {a.id}");
+            FunctionBuilder.Add(
+                $"execute store result score #{a.id}_temp {a.id} run {b}\n"+
+                $"scoreboard players operation #{a.id} {a.id} /= #{a.id}_temp {a.id}\n"+
+                $"scoreboard players reset #{a.id}_temp"
+            );
             return a;
         }
         public static Score operator % (Score a, string b) {
-            FunctionBuilder.Add($"scoreboard players operation #{a.id} {a.id} %= {b} {a.id}");
+            FunctionBuilder.Add(
+                $"execute store result score #{a.id}_temp {a.id} run {b}\n"+
+                $"scoreboard players operation #{a.id} {a.id} %= #{a.id}_temp {a.id}\n"+
+                $"scoreboard players reset #{a.id}_temp"
+            );
             return a;
         }
         public static bool operator == (Score a, int b) {
