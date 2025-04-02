@@ -52,16 +52,16 @@ public class Hitbox {
             body: (ctx) => {
                 Entity.Summon(EntityEnum.Interaction, [coords.x, coords.y, coords.y], "{Tags:[\"" + _ctx.Namespace + "." + Id + "\"],width:" + Width + ",height:" + Height + "}");
                 Execute.Write(
-                    Str.Execute.Asat(Entity.AllEntities("type=interaction,tag=" + _ctx.Namespace + "." + Id)) +
+                    Str.Execute.Asat(Entity.AllEntitiesMatch("type=interaction,tag=" + _ctx.Namespace + "." + Id)) +
                     "on attacker ",
                     [Str.Function.Call($"{_ctx.Namespace}:hitbox/{Workspace}/on_attack")]
                 );
                 Execute.Write(
-                    Str.Execute.Asat(Entity.AllEntities("type=interaction,tag=" + _ctx.Namespace + "." + Id)) +
+                    Str.Execute.Asat(Entity.AllEntitiesMatch("type=interaction,tag=" + _ctx.Namespace + "." + Id)) +
                     "on target ",
                     [Str.Function.Call($"{_ctx.Namespace}:hitbox/{Workspace}/on_right_click")]
                 );
-                Entity.Kill(Entity.AllEntities("type=interaction,tag=" + _ctx.Namespace + "." + Id));
+                Entity.Kill(Entity.AllEntitiesMatch("type=interaction,tag=" + _ctx.Namespace + "." + Id));
                 return FunctionBuilder.Collect();
             }
         );
