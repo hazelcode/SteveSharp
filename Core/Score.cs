@@ -13,6 +13,7 @@ namespace SteveSharp.Core
             this.id = id;
             this.type = type;
             this.name = name;
+            AddObjective();
         }
         public void AddObjective() => FunctionBuilder.Add(Str.Score.AddObjective(id, type, name));
         public static void AddObjective(string id, string type, string name) => FunctionBuilder.Add(Str.Score.AddObjective(id, type, name));
