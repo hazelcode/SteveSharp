@@ -295,12 +295,13 @@ namespace SteveSharp.Core
             Dictionary<string, int> keyValuePairs = new();
             string commands = $"scoreboard objectives add {name} dummy\n";
             int i = 0;
+            scoreEnum = [];
             foreach(var key in keys) {
                 commands += $"scoreboard players set #{key} {name} {i}\n";
                 keyValuePairs[key] = i;
+                scoreEnum.Add(key, keyValuePairs[key]);
                 i++;
             }
-            scoreEnum = (ScoreEnum) keyValuePairs;
             i = 0;
             foreach(var key in keys) {
                 scoreEnum.EnumMap.Add(i, key);
