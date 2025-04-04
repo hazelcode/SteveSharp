@@ -289,6 +289,25 @@ namespace SteveSharp.Core
             }
         }
 
-    public override int GetHashCode() => GetHashCode();
+        public override int GetHashCode() => GetHashCode();
+        
+        public static void Enum(string name, string[] keys, out ScoreEnum scoreEnum) {
+            Dictionary<string, int> keyValuePairs = new();
+            string commands = $"scoreboard objectives add {name} dummy\n";
+            int i = 0;
+            foreach(var key in keys) {
+                commands += $"scoreboard players set #{key} {name} {i}\n";
+                keyValuePairs[key] = i;
+                i++;
+            }
+            scoreEnum = (ScoreEnum) keyValuePairs;
+            i = 0;
+            foreach(var key in keys) {
+                scoreEnum.EnumMap.Add(i, key);
+                i++;
+            }
+            
+            FunctionBuilder.Add(commands);
+        }
     }
 }
