@@ -293,11 +293,12 @@ namespace SteveSharp.Core
         
         public static void Enum(string name, string[] keys, out ScoreEnum scoreEnum) {
             Dictionary<string, int> keyValuePairs = new();
-            string commands = $"scoreboard objectives add {name} dummy\n";
+            List<string> commands = [$"scoreboard objectives add {name} dummy"];
             int i = 0;
             scoreEnum = [];
+            scoreEnum.Name = name;
             foreach(var key in keys) {
-                commands += $"scoreboard players set #{key} {name} {i}\n";
+                commands.Add($"scoreboard players set #{key} {name} {i}");
                 keyValuePairs[key] = i;
                 scoreEnum.Add(key, keyValuePairs[key]);
                 i++;
