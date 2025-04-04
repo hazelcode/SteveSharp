@@ -42,4 +42,16 @@ public class ScoreEnum() : Dictionary<string, int> {
             $"execute as {targets} unless score @s {Name} > #{EnumMap[EnumMap.Count-1]} {Name} run scoreboard players add @s {Name} 1"
         ]);
     }
+    public void Past(Targets targets) {
+        FunctionBuilder.Add([
+            $"execute as {TargetsHandler.Get(targets)} if score @s {Name} matches ..0 run scoreboard players set @s {Name} {Count-1}",
+            $"execute as {TargetsHandler.Get(targets)} unless score @s {Name} matches ..1 run scoreboard players remove @s {Name} 1"
+        ]);
+    }
+    public void Past(string targets) {
+        FunctionBuilder.Add([
+            $"execute as {targets} if score @s {Name} matches ..0 run scoreboard players set @s {Name} {Count-1}",
+            $"execute as {targets} unless score @s {Name} matches ..1 run scoreboard players remove @s {Name} 1"
+        ]);
+    }
 }
