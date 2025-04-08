@@ -311,5 +311,12 @@ namespace SteveSharp.Core
             
             FunctionBuilder.Add(commands);
         }
+        public static void Trigger(string name, Targets targets, Function onTrigger, ref Trigger trigger) {
+            trigger = new Trigger(name, targets, onTrigger);
+        }
+            
+        public static void Trigger(string name, string targets, Function onTrigger, out Trigger trigger) {
+            trigger = new Trigger(name, targets, onTrigger);
+        }
     }
 }
