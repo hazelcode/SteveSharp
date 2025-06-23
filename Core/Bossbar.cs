@@ -1,8 +1,9 @@
 using System.Text.Json;
 using SteveSharp.Generic;
 using SteveSharp.JsonShapes;
+using Str = SteveSharp.Core.Strings;
 
-namespace SteveSharp;
+namespace SteveSharp.Core;
 
 public class Bossbar
 {
@@ -21,56 +22,38 @@ public class Bossbar
         Notched12,
         Notched20
     }
-    public static string Add(string id, TextComponent text) => $"bossbar add {id} {JsonSerializer.Serialize(text)}";
-    public static string Add(string id, TextComponent[] text) => $"bossbar add {id} {JsonSerializer.Serialize(text)}";
-    public static string Get(string id, GetField field)
-    {
-        Dictionary<GetField, string> fieldStr = new() {
-            {GetField.Max, "max"},
-            {GetField.Players, "players"},
-            {GetField.Value, "value"},
-            {GetField.Visible, "visible"}
-        };
-        return $"bossbar get {id} {fieldStr[field]}";
-    }
-    public static string Get(string id, string field) => $"bossbar get {id} {field}";
-    public static string List() => "bossbar list";
-    public static string Remove(string id) => $"bossbar remove {id}";
-    public static string SetColor(string id, Color color) => $"bossbar set {id} color {ColorHandler.Get(color)}";
-    public static string SetColor(string id, string color) => $"bossbar set {id} color {color}";
-    public static string SetMax(string id, int max) => $"bossbar set {id} max {max}";
-    public static string SetName(string id, TextComponent name) => $"bossbar set {id} name {JsonSerializer.Serialize(name)}";
-    public static string SetName(string id, TextComponent[] name) => $"bossbar set {id} name {JsonSerializer.Serialize(name)}";
-    public static string SetPlayers(string id, string targets) => $"bossbar set {id} players {targets}";
-    public static string SetStyle(string id, Style style)
-    {
-        Dictionary<Style, string> styleStr = new() {
-            {Style.Notched6, "notched_6"},
-            {Style.Notched10, "notched_10"},
-            {Style.Notched12, "notched_12"},
-            {Style.Notched20, "notched_20"}
-        };
-        return $"bossbar set {id} style {styleStr[style]}";
-    }
-    public static string SetStyle(string id, string style) => $"bossbar set {id} style {style}";
-    public static string SetValue(string id, int value) => $"bossbar set {id} value {value}";
-    public static string SetVisible(string id, bool visible) => $"bossbar set {id} visible {visible.ToString().ToLower()}";
+    public static void Add(string id, TextComponent text) => FunctionBuilder.Add(Str.Bossbar.Add(id, text)); 
+    public static void Add(string id, TextComponent[] text) => FunctionBuilder.Add(Str.Bossbar.Add(id, text));
+    public static void Get(string id, GetField field) => FunctionBuilder.Add(Str.Bossbar.Get(id, field));
+    public static void Get(string id, string field) => FunctionBuilder.Add(Str.Bossbar.Get(id, field));
+    public static void List() => FunctionBuilder.Add(Str.Bossbar.List());
+    public static void Remove(string id) => FunctionBuilder.Add(Str.Bossbar.Remove(id));
+    public static void SetColor(string id, Color color) => FunctionBuilder.Add(Str.Bossbar.SetColor(id, color));
+    public static void SetColor(string id, string color) => FunctionBuilder.Add(Str.Bossbar.SetColor(id, color));
+    public static void SetMax(string id, int max) => FunctionBuilder.Add(Str.Bossbar.SetMax(id, max));
+    public static void SetName(string id, TextComponent name) => FunctionBuilder.Add(Str.Bossbar.SetName(id, name));
+    public static void SetName(string id, TextComponent[] name) => FunctionBuilder.Add(Str.Bossbar.SetName(id, name));
+    public static void SetPlayers(string id, string targets) => FunctionBuilder.Add(Str.Bossbar.SetPlayers(id, targets));
+    public static void SetStyle(string id, Style style) => FunctionBuilder.Add(Str.Bossbar.SetStyle(id, style));
+    public static void SetStyle(string id, string style) => FunctionBuilder.Add(Str.Bossbar.SetStyle(id, style));
+    public static void SetValue(string id, int value) => FunctionBuilder.Add(Str.Bossbar.SetValue(id, value));
+    public static void SetVisible(string id, bool visible) => FunctionBuilder.Add(Str.Bossbar.SetVisible(id, visible));
     public Bossbar(string id)
     {
         Id = id;
     }
-    public string Add(TextComponent text) => Add(this.Id!, text);
-    public string Add(TextComponent[] text) => Add(this.Id!, text);
-    public string Get(GetField field) => Get(this.Id!, field);
-    public string Get(string field) => Get(this.Id!, field);
-    public string SetColor(Color color) => SetColor(this.Id!, color);
-    public string SetColor(string color) => SetColor(this.Id!, color);
-    public string SetMax(int max) => SetMax(this.Id!, max);
-    public string SetName(TextComponent name) => SetName(this.Id!, name);
-    public string SetName(TextComponent[] name) => SetName(this.Id!, name);
-    public string SetPlayers(string targets) => SetPlayers(this.Id!, targets);
-    public string SetStyle(Style style) => SetStyle(this.Id!, style);
-    public string SetStyle(string style) => SetStyle(this.Id!, style);
-    public string SetValue(int value) => SetValue(this.Id!, value);
-    public string SetVisible(bool visible) => SetVisible(this.Id!, visible);
+    public void Add(TextComponent text) => Add(this.Id!, text);
+    public void Add(TextComponent[] text) => Add(this.Id!, text);
+    public void Get(GetField field) => Get(this.Id!, field);
+    public void Get(string field) => Get(this.Id!, field);
+    public void SetColor(Color color) => SetColor(this.Id!, color);
+    public void SetColor(string color) => SetColor(this.Id!, color);
+    public void SetMax(int max) => SetMax(this.Id!, max);
+    public void SetName(TextComponent name) => SetName(this.Id!, name);
+    public void SetName(TextComponent[] name) => SetName(this.Id!, name);
+    public void SetPlayers(string targets) => SetPlayers(this.Id!, targets);
+    public void SetStyle(Style style) => SetStyle(this.Id!, style);
+    public void SetStyle(string style) => SetStyle(this.Id!, style);
+    public void SetValue(int value) => SetValue(this.Id!, value);
+    public void SetVisible(bool visible) => SetVisible(this.Id!, visible);
 }

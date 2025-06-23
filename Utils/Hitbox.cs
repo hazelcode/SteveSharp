@@ -1,72 +1,69 @@
-﻿using SteveSharp;
-using SteveSharp.Core;
-using SteveSharp.JsonShapes;
+﻿using SteveSharp.Core;
+using SteveSharp.Generic;
+using Str = SteveSharp.Core.Strings;
 
-/*
-NOT FOR NOW
-namespace SteveSharp.Utils
-{
-    public class Hitbox
-    {
-        public float width = 1.0f;
-        public float height = 1.0f;
-        public string workspace;
-        public string id;
-        public string[] XYZ;
-        public string[] onAttack;
-        public string[] onRightClick;
-        public Hitbox(string workspace, string id)
-        {
-            this.workspace = workspace;
-            this.id = id;
-            XYZ = new string[3] { "~", "~", "~" };
-            onAttack = new string[] {
-                Chat.Out(
-                    Entity.Self(),
-                    new TextComponent[]
-                    {
-                        new TextComponent
-                        {
-                            text = ""
-                        }
-                    }
-                )
-            };
-            onRightClick = new string[] {
-                Chat.Out(
-                    Entity.Self(),
-                    new TextComponent[]
-                    {
-                        new TextComponent
-                        {
-                            text = ""
-                        }
-                    }
-                )
-            };
-        }
-        public string Summon(string function)
-        {
-            Function f = new Function(FileOrganizer.GetFunctionPath(function));
-            return f.Extend(
-                    $"{workspace}:hitbox/" + this.id.ToLower() + "/summon",
-                    new string[]
-                    {
-                        Entity.Summon("interaction",new[]{ "~", "~", "~" },
-                        "{Tags:[\"" + workspace + "." + this.id + "\"],width:" + this.width + ",height:" + this.height + "}"),
-                        Execute.Write(
-                            Execute.Asat(Entity.AllEntities("type=interaction,tag=" + workspace + "." + this.id)) +
-                            "on attacker ",
-                            onAttack
-                        ),
-                        Execute.Write(
-                            Execute.Asat(Entity.AllEntities("type=interaction,tag=" + workspace + "." + this.id)) +
-                            "on trigger ",
-                            onRightClick
-                        ),
-                        Entity.Kill(Entity.AllEntities("type=interaction,tag=" + workspace + "." + this.id))
-                    }, true
-                );
-        }
+namespace SteveSharp.Utils;
+
+public class Hitbox {
+    public float Width = 1.0f;
+    public float Height = 1.0f;
+
+    public string Id { get; set; }
+    public string Workspace;
+    private FunctionContext _ctx;
+    public (string x, string y, string z) coords;
+
+    public Hitbox(string id, string workspace, FunctionContext ctx) {
+        Id = id;
+        Workspace = workspace;
+        coords = XYZ.Vec3("~", "~", "~");
+        _ctx = ctx;
     }
-}*/
+
+    public void Setup(Action<FunctionContext> onAttack, Action<FunctionContext> onRightClick) {
+        _ctx.Project.FunctionIndex.Add($"{_ctx!.Namespace}:hitbox/{Workspace}/on_attack", OnAttack(onAttack));
+        _ctx.Project.FunctionIndex.Add($"{_ctx!.Namespace}:hitbox/{Workspace}/on_right_click", OnRightClick(onRightClick));
+    }
+
+    public string Invoke() {
+        return Str.Function.Call($"{_ctx!.Namespace}:hitbox/{Workspace}/summon");
+    }
+    public Function OnAttack(Action<FunctionContext> body) {
+        return new Function(
+            name: $"{_ctx!.Namespace}:hitbox/{Workspace}/on_attack",
+            body: (ctx) => {
+                body(ctx);
+                return FunctionBuilder.Collect();
+            }
+        );
+    }
+    private Function OnRightClick(Action<FunctionContext> body) {
+        return new Function(
+            name: $"{_ctx!.Namespace}:hitbox/{Workspace}/on_right_click",
+            body: (ctx) => {
+                body(ctx);
+                return FunctionBuilder.Collect();
+            }
+        );
+    }
+    public Function SummonFunction() {
+        return new Function(
+            name: $"{_ctx!.Namespace}:hitbox/{Workspace}/summon",
+            body: (ctx) => {
+                Entity.Summon(EntityEnum.Interaction, [coords.x, coords.y, coords.y], "{Tags:[\"" + _ctx.Namespace + "." + Id + "\"],width:" + Width + ",height:" + Height + "}");
+                Execute.Write(
+                    Str.Execute.Asat(Entity.AllEntitiesMatch("type=interaction,tag=" + _ctx.Namespace + "." + Id)) +
+                    "on attacker ",
+                    [Str.Function.Call($"{_ctx.Namespace}:hitbox/{Workspace}/on_attack")]
+                );
+                Execute.Write(
+                    Str.Execute.Asat(Entity.AllEntitiesMatch("type=interaction,tag=" + _ctx.Namespace + "." + Id)) +
+                    "on target ",
+                    [Str.Function.Call($"{_ctx.Namespace}:hitbox/{Workspace}/on_right_click")]
+                );
+                Entity.Kill(Entity.AllEntitiesMatch("type=interaction,tag=" + _ctx.Namespace + "." + Id));
+                return FunctionBuilder.Collect();
+            }
+        );
+    }
+}

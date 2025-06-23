@@ -1,18 +1,35 @@
-﻿using SteveSharp.JsonShapes;
+﻿using SteveSharp.Exceptions;
+using SteveSharp.JsonShapes;
 using System.Text.Json;
 
 namespace SteveSharp
 {
     public class Project
     {
+        private string _name { get; set; }
+
+        private string _description { get; set; }
+        private PackFormat _packFormat { get; set; }
+        private string _namespace { get; set; }
         public Dictionary<string, Function> FunctionIndex { get; set; }
         private readonly Function _load;
         private readonly Function _main;
         private readonly List<Function> _functions;
-        public Project(string name, string description, string id, int pack_format, Function load, Function main, List<Function> functions, List<List<Function>> matrix = null!, List<JsonFile> jsonFiles = null!)
+        public Dictionary<string, string[]> FunctionContents = new();
+        public Dictionary<string, object> Variables = new();
+
+        private string[] GetFunctionCommands(string functionName) {
+            return FunctionContents[functionName];
+        }
+
+        public Project(string name, string description, string id, PackFormat packFormat, Function load, Function main, List<Function> functions, List<List<Function>> matrix = null!, List<JsonFile> jsonFiles = null!, PackMetadata customPackMetadata = null!)
         {
             // Display fresh SteveSharp Display
             Displays.SteveSharpDisplay(name);
+            _name = name;
+            _description = description;
+            _namespace = id;
+            _packFormat = packFormat;
             _load = load;
             _main = main;
             _functions = functions;
@@ -23,31 +40,46 @@ namespace SteveSharp
             Environment.CurrentDirectory = name;
             FileOrganizer.CreateFullDirectory($"data/{id}/functions");
             FileOrganizer.CreateFullDirectory($"data/minecraft/tags/functions");
-            var metadata = new PackMetadata
-            {
-                pack = new Pack
-                {
-                    description = description,
-                    pack_format = pack_format
+            var metadata = new PackMetadata();
+            if(customPackMetadata != null) {
+                metadata = customPackMetadata;
+                // Restriction for supported_formats field
+                // Beware: If you have specified a custom pack metadata and you have
+                // specified the supported formats field,
+                // and you specified a pack_format under 18,
+                // the code will throw an DatapackFeatureException.
+                if(
+                metadata.Pack!.SupportedFormats != null
+                && metadata.Pack!.PackFormat < PackFormat.Format18) {
+                    throw new DatapackFeatureException("supported_formats", PackFormat.Format18);
                 }
-            };
+            } else {
+                metadata = new PackMetadata {
+                    Pack = new Pack {
+                        Description = description,
+                        PackFormat = _packFormat
+                    }
+                };
+            }
             File.WriteAllText("pack.mcmeta", JsonSerializer.Serialize(metadata, new JsonSerializerOptions { WriteIndented = true }));
             File.WriteAllText($"data/minecraft/tags/functions/load.json",
                 JsonSerializer.Serialize(new Tag
                 {
-                    values = new string[] { _load.Name }
+                    values = [_load.Name]
                 }, new JsonSerializerOptions { WriteIndented = true })
             );
             File.WriteAllText($"data/minecraft/tags/functions/tick.json",
                 JsonSerializer.Serialize(new Tag
                 {
-                    values = new string[] { _main.Name }
+                    values = [_main.Name]
                 }, new JsonSerializerOptions { WriteIndented = true })
             );
             Displays.ProjectCreated();
-            File.WriteAllLines(loadPath, _load.Body);
+            FunctionBuilder.BuildFunction(_load, _namespace, (int)_packFormat, this);
+            File.WriteAllLines(loadPath, GetFunctionCommands(_load.Name));
             Displays.WrittenFunction(_load.Name);
-            File.WriteAllLines(mainPath, _main.Body);
+            FunctionBuilder.BuildFunction(_main, _namespace, (int)_packFormat, this);
+            File.WriteAllLines(mainPath, GetFunctionCommands(_main.Name));
             Displays.WrittenFunction(_main.Name);
 
             if (_functions.Count > 0)
@@ -85,7 +117,8 @@ namespace SteveSharp
                     {
                         Directory.CreateDirectory(directory);
                     }
-                    File.WriteAllLines(FileOrganizer.GetFunctionPath(function.Value.Name), function.Value.Body);
+                    FunctionBuilder.BuildFunction(function.Value, _namespace, (int)_packFormat, this);
+                    File.WriteAllLines(FileOrganizer.GetFunctionPath(function.Value.Name), GetFunctionCommands(function.Value.Name));
                 }
 
             if (jsonFiles != null && jsonFiles.Count > 0)

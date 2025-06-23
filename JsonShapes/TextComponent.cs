@@ -4,32 +4,45 @@ namespace SteveSharp.JsonShapes
 {
     public class TextComponent
     {
-        public string? text { get; set; }
+        [JsonPropertyName("text")]
+        public string? Text { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 
-        public string? color { get; set; }
+        [JsonPropertyName("color")]
+        public string? Color { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public bool italic { get; set; }
+        [JsonPropertyName("italic")]
+        public bool Italic { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public bool bold { get; set; }
+        [JsonPropertyName("bold")]
+        public bool Bold { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public bool underlined { get; set; }
+        [JsonPropertyName("underlined")]
+        public bool Underlined { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public bool obfuscated { get; set; }
+        [JsonPropertyName("obfuscated")]
+        public bool Obfuscated { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public bool strikethrough { get; set; }
+        [JsonPropertyName("strikethrough")]
+        public bool Strikethrough { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string? insertion { get; set; }
+        [JsonPropertyName("insertion")]
+        public string? Insertion { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public clickEvent? clickEvent { get; set; }
+        [JsonPropertyName("clickEvent")]
+        public ClickEvent? ClickEvent { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public TextComponent[]? extra { get; set; }
+        [JsonPropertyName("extra")]
+        public TextComponent[]? Extra { get; set; }
     }
-    public class clickEvent
+    public class ClickEvent
     {
+        [JsonPropertyName("action")]
+
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string? action { get; set; }
+        public string? Action { get; set; }
+        [JsonPropertyName("value")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string? value { get; set; }
+        public string? Value { get; set; }
     }
 }
